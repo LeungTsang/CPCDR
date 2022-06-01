@@ -1,0 +1,13 @@
+_BASE_: "Base-RCNN-FPN.yaml"
+MODEL:
+  META_ARCHITECTURE: "PanopticFPN"
+  MASK_ON: True
+  SEM_SEG_HEAD:
+    LOSS_WEIGHT: 0.5
+  RESNETS:
+    STRIDE_IN_1X1: False
+DATASETS:
+  TRAIN: ("coco_2017_train_panoptic_separated",)
+  TEST: ("coco_2017_val_panoptic_separated",)
+DATALOADER:
+  FILTER_EMPTY_ANNOTATIONS: False
