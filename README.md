@@ -43,8 +43,8 @@ dataset for evaluation
                           │     └── ...  
                           └── ...  
 
-##simple usage  
 
+##simple usage  
 ### Training  
 ~~~  
 python run.py --data_path path_to_dataset_for_training  
