@@ -29,6 +29,15 @@ dataset for training
                           │     ├── aachen_000000_000000_leftImg8bit.png  
                           │     └── ...  
                           └── ...  
+prepared dataset for training 
+      └── config.pth     
+      └── epoch0/  
+      │     ├── 0000000000_img.png
+      │     ├── 0000000000_label.png
+      │     ├── 0000000000_transforms.pt
+      │     └── ...
+      └── ... 
+      
 dataset for evaluation  
       └── leftImg8bit/  
       │           └── val/  
@@ -46,9 +55,18 @@ dataset for evaluation
 
 ## simple usage  
 ### Training  
+
 ~~~  
 python run.py --data_path path_to_dataset_for_training  
 ~~~  
+generating training data by copy-paste in real time can be time-consuming, you might generate prepared data for repeated use
+~~~
+python run.py --data_path path_to_dataset_for_training  --only_generate_data
+~~~
+use preparead data for training
+~~~
+python run.py --data_path path_to_dataset_for_training  --use_prepared_data
+~~~
 ### Evaluation  
 ~~~  
 python eval_unsupervised.py --model_path path_to_pretraining_model --data_path path_to_dataset_for_evaluation  
