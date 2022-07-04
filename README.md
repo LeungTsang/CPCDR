@@ -65,9 +65,14 @@ python run.py --data_path path_to_dataset_for_training  --only_generate_data
 ~~~
 use preparead data for training
 ~~~
-python run.py --data_path path_to_dataset_for_training  --use_prepared_data
+python run.py --data_path prepared dataset for training  --use_prepared_data
 ~~~
 ### Evaluation  
 ~~~  
 python eval_unsupervised.py --model_path path_to_pretraining_model --data_path path_to_dataset_for_evaluation  
 ~~~  
+
+## TODO's  
+add details on preparing estimated depth/region proposal 
+add pretrained models
+
