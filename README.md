@@ -1,5 +1,5 @@
 # MSc-Project：Leverage Depth and Copy-Paste to Boost Contrastive Learning for Urban-Scene Segmentation
-## Overall pipeline 
+## Overall Pipeline 
 ![Pipeline](https://github.com/LeungTsang/MSc-Project/raw/main/fig/pipeline.png)
 ## Visualization  
 ![Visualization](https://github.com/LeungTsang/MSc-Project/raw/main/fig/fig1.gif)
