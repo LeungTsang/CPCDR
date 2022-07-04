@@ -12,18 +12,16 @@ import math
 import random
 import matplotlib.pyplot as plt
 import glob
-#import wandb
 
-import datasets
+import dataloader
 from utils import *
 from model import *
-#from apex import amp
 from torch.cuda.amp import autocast
 from torch.cuda.amp import GradScaler
 
 torch.manual_seed(0)
 #os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
-class Trainer():
+class BaseTrainer():
     def __init__(self, config):
         #super(Trainer_depth2seg, self).__init__(config, models)
         if config.resume_model_path is not None:
@@ -136,9 +134,9 @@ class Trainer():
         self.model_optimizer.load_state_dict(torch.load(os.path.join(self.config.resume_model_path, "optimizer.pth")))
         self.model_lr_scheduler.load_state_dict(torch.load(os.path.join(self.config.resume_model_path, "scheduler.pth")))
 
-class Trainer_FYA(Trainer):
+class Trainer(BaseTrainer):
     def __init__(self, config):
-        super(Trainer_FYA, self).__init__(config)
+        super(Trainer, self).__init__(config)
 
         self.model = build_SwAV(self.config)
         self.model.to(self.device)
@@ -152,12 +150,12 @@ class Trainer_FYA(Trainer):
         #self.model_lr_scheduler = optim.lr_scheduler.CosineAnnealingLR(self.model_optimizer, self.config.num_epochs, eta_min=1e-6)
 
         if self.config.use_prepared_data == True:
-            self.train_dataset = datasets.prepared_dataset(self.config)
+            self.train_dataset = dataloader.prepared_dataset(self.config)
             self.train_loader = DataLoader(
                 self.train_dataset, batch_size = self.config.batch_size, shuffle = True,
                 num_workers=self.config.num_workers, pin_memory=True, drop_last=True, persistent_workers=True)
         else:
-            self.train_dataset = datasets.cp_dataset(self.config)
+            self.train_dataset = dataloader.cp_dataset(self.config)
             self.train_loader = DataLoader(
                 self.train_dataset, batch_size = self.config.batch_size, shuffle = True,
                 num_workers=self.config.num_workers, pin_memory=True, drop_last=True, persistent_workers=True)

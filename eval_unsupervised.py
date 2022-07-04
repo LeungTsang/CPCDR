@@ -11,32 +11,47 @@ import time
 import PIL.Image as pil
 import json
 import random
+import argparse
 import matplotlib.pyplot as plt
 from scipy.optimize import linear_sum_assignment
 import sklearn.cluster as sc
 
-import datasets
-#from networks import *
 from utils import *
 from detectron2_model.modeling.backbone import build_backbone
 from detectron2_model.modeling.meta_arch.semantic_seg import build_sem_seg_head
 from detectron2_model.config import get_cfg
 
-datasets = "kitti"
+parser = argparse.ArgumentParser(description="evaluate unsupervised semantic segmentation")
 
-if datasets == "cs":
-  paths = "leftImg8bit/val/*/*.png"
-  size = (768,384)
+parser.add_argument("--model_path", type=str, required=True,
+                    help="path to dataset repository",)
+parser.add_argument("--data_path", type=str, default=".", required=True,
+                    help="path to dataset repository")
+parser.add_argument("--dataset", type=str, default="cs", choices=["cs", "kitti"],
+                    help="cs or kitti")
+parser.add_argument("--input_size", type=int, default=None, nargs="+",
+                    help="input size")
+
+config = parser.parse_args()
+
+
+if config.dataset == "cs":
+  path = config.data_path + "leftImg8bit/val/*/*.png"
+  if config.input_size is None:
+      size = (768,384)
+  else:
+      size = config.input_size
 else:
-  paths = "data_semantics/training/image_2/*.png"
-  size = (1280,384)
+  path = config.data_path + "data_semantics/training/image_2/*.png"
+  if config.input_size is None:
+    size = (1280,384)
+  else:
+      size = config.input_size
 
-
-img_paths = sorted(glob.glob(paths))
-
+img_paths = sorted(glob.glob(path))
 t = T.Compose([T.ToTensor(),T.Normalize(mean=[0.485, 0.456, 0.406],std=[0.229, 0.224, 0.225])])
 cfg = get_cfg()
-cfg.merge_from_file("depth2seg/detectron2_model/Base-Panoptic-FPN.yaml")
+cfg.merge_from_file("./detectron2_model/Base-Panoptic-FPN.yaml")
 backbone = build_backbone(cfg)
 sem_seg_head = build_sem_seg_head(cfg, backbone.output_shape())
 projector = MLP(in_channels = 128, out_channels=128, layer_num = 1)
@@ -44,8 +59,7 @@ prototypes = nn.Conv2d(in_channels=projector.out_channels, out_channels=1000, ke
 model = SwAVModel(backbone,sem_seg_head,projector,prototypes).to("cuda")
 model.eval()
 
-
-pretrained_dict = torch.load("drive/MyDrive/depth2seg_models_ab/swav_kitti_depth_cp_6_mix_full_x/weights_14_203364/model.pth")
+pretrained_dict = torch.load(config.model_path)
 model_dict = model.state_dict()
 pretrained_dict = {k:v for k, v in pretrained_dict.items() if k in model_dict}
 print(pretrained_dict.keys())
@@ -65,12 +79,12 @@ with torch.no_grad():
     for i,img_path in enumerate(img_paths):
         #print(img_path)
         img = pil.open(img_path).resize(size, pil.ANTIALIAS)
-        if datasets == "cs":
+        if config.dataset == "cs":
           gt = pil.open(img_path.replace("leftImg8bit","gtFine").replace(".png","_labelIds.png"))
-        else:
+          #print(img_path.replace("leftImg8bit","gtFine").replace(".png","_labelIds.png"))
+        if config.dataset == "kitti":
           gt = pil.open(img_path.replace("image_2","semantic"))
         gt = np.array(gt.resize(size, pil.NEAREST)).astype(np.uint16)
-
         img = t(img).unsqueeze(0).to("cuda")
         _,projection = model(img)
         projection = F.interpolate(projection, gt.shape, mode="bilinear", align_corners=False)

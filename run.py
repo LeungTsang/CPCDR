@@ -1,29 +1,34 @@
-from trainer import Trainer_FYA
+from trainer import Trainer
 import os 
-import wandb
 import argparse
 
 parser = argparse.ArgumentParser(description="Implementation of FYA")
 #data
-parser.add_argument("--use_prepared_data", type=bool, default=False,
+parser.add_argument("--use_prepared_data", action="store_true",
                     help="use prepared mixing images")
-parser.add_argument("--only_generate_data", type=bool, default=False,
-                    help="only generate mixing images in advance")
-parser.add_argument("--data_path", type=str, default="/content/",
+parser.add_argument("--only_generate_data", action="store_true",
+                    help="use prepared mixing images")
+parser.add_argument("--data_path", type=str, required=True,
                     help="path to dataset repository")
+parser.add_argument("--dataset", type=str, default="cs", choices=["cs", "kitti"],
+                    help="cs or kitti")
 parser.add_argument("--input_size", type=int, default=[384,768], nargs="+",
                     help="input size")
 parser.add_argument("--mix_num", type=int, default=8,
                     help="number of image used in image mixing process")
 parser.add_argument("--cp_times", type=int, default=[2,4], nargs="+",
                     help="copy-paste times for each region instance in the two rounds of image mixing process")
+parser.add_argument("--cfg_file", type=str, default="./detectron2_model/Base-Panoptic-FPN.yaml",
+                    help="detectron2 cfg file for network architecture")
+
+
 
 #resume
 parser.add_argument("--resume_model_path", type=str, default=None,
                     help="model path for resuming training")
 
 #save
-parser.add_argument("--model_name", type=str, default="FYA_model",
+parser.add_argument("--model_name", type=str, default="model",
                     help="name of the model")
 parser.add_argument("--save_path", type=str, default="./save_model",
                     help="model save path")
@@ -53,7 +58,6 @@ parser.add_argument("--num_workers", type=int, default=6,
                     help="number of dataloader workers")
 parser.add_argument("--batch_size", type=int, default=1,
                     help="number of training items per iteration")
-
 parser.add_argument("--backbone_lr", type=float, default=1e-1,
                     help="backbone learning rate")
 parser.add_argument("--sem_seg_head_lr", type=float, default=1e-1,
@@ -66,7 +70,7 @@ parser.add_argument("--final_lr", type=float, default=1e-5,
                     help="final learning in cosine decay schedule")
 parser.add_argument("--warmup_epochs", type=int, default=2,
                     help="number of epochs for warmup")
-parser.add_argument("--num_epochs", type=int, default=20,
+parser.add_argument("--num_epochs", type=int, default=25,
                     help="number of total epochs")
 parser.add_argument("--log_frequency", type=int, default=25,
                     help="frequency of printing training info")
@@ -82,6 +86,6 @@ parser.add_argument("--region_sample_per_img", type=int, default=7200,
 
 if __name__ == "__main__":
     config = parser.parse_args()
-    trainer = Trainer_FYA(config)
+    trainer = Trainer(config)
     trainer.train()
 

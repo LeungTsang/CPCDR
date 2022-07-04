@@ -29,7 +29,7 @@ class cp_dataset(data.Dataset):
         self.to_tensor = T.ToTensor()
         self.to_pil = T.ToPILImage()
         self.instance_spatial_trans = joint_T_depth.Compose([
-            joint_T_depth.RandomDistance(p=1, center=160, scale = (0.2, 2), min_size = 8, max_size = (2*self.height, 2*self.width), img_size = (self.height,self.width)),
+            joint_T_depth.RandomDistance(p=1, center=self.height//2, scale = (0.2, 2), min_size = 8, max_size = (2*self.height, 2*self.width), img_size = (self.height,self.width)),
             joint_T_depth.RandomHorizontalFlip(),
             ])
 
@@ -48,9 +48,11 @@ class cp_dataset(data.Dataset):
             joint_T.ToTensor(),
             joint_T.Normalize(mean=[0.485, 0.456, 0.406],std=[0.229, 0.224, 0.225]),
         ])
-
-        cs_path = "rgb/leftImg8bit/train/*/*.png"
-        self.img_path = sorted(glob.glob(self.config.data_path+cs_path))
+        if config.dataset == "cs":
+          path = "rgb/leftImg8bit*/train/*/*.png"
+        else:
+          path = "rgb/leftImg8bit/train/*/*.png"
+        self.img_path = sorted(glob.glob(self.config.data_path+path))
         self.dataset_size = len(self.img_path)//self.config.mix_num
 
 
@@ -67,7 +69,7 @@ class cp_dataset(data.Dataset):
 
         for i in range(self.config.mix_num):
             path = self.img_path[i*self.dataset_size+index]
-            inst = self.get_inst(path.replace("rgb","inst"))
+            inst = self.get_inst(path.replace("rgb","region"))
             disp = self.get_disp(path.replace("rgb","disp"))
             rgb = self.get_rgb(path)
 

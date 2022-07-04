@@ -11,7 +11,7 @@ from model import *
     
 def build_SwAV(config):
     cfg = get_cfg()
-    cfg.merge_from_file("depth2seg/detectron2_model/Base-Panoptic-FPN.yaml")
+    cfg.merge_from_file(config.cfg_file)
 
     backbone = build_backbone(cfg)
     sem_seg_head = build_sem_seg_head(cfg, backbone.output_shape())
@@ -20,20 +20,6 @@ def build_SwAV(config):
 
     model = SwAVModel(backbone, sem_seg_head, projector, prototypes)
 
-    return model
-
-
-def build_SegModel(config):
-    cfg = get_cfg()
-    cfg.merge_from_file("depth2seg/detectron2_model/Base-Panoptic-FPN.yaml")
-
-    backbone = build_backbone(cfg)
-    sem_seg_head = build_sem_seg_head(cfg, backbone.output_shape())
-    projector = MLP(in_channels = 128, layer_num = config.projector_layer_num, get_intermediate = True)
-    linear_classifier = nn.Conv2d(in_channels=projector.out_channels, out_channels=config.cls_num, kernel_size=1, padding=0, bias=True)
-
-    model = SegModel(backbone, sem_seg_head, projector, linear_classifier, config.freeze_representation)
-    
     return model
 
 
