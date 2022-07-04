@@ -6,6 +6,7 @@
 Thesis: http://resolver.tudelft.nl/uuid:3c7ba0bd-b467-4e1d-91df-c3ecceeec344
 
 ## The expected directory of dataset(Cityscapes)  
+~~~  
 dataset for training  
       └── rgb/  
       │     └── leftImg8bit/  
@@ -28,6 +29,7 @@ dataset for training
                           │     ├── aachen_000000_000000_leftImg8bit.png  
                           │     └── ...  
                           └── ...  
+~~~
 dataset for evaluation  
       └── leftImg8bit/  
       │           └── val/  
