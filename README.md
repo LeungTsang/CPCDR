@@ -42,7 +42,9 @@ dataset for evaluation
                           │     ├── frankfurt_000000_000294_gtFine_labelIds.png  
                           │     └── ...  
                           └── ...  
+
 ##simple usage  
+
 ### Training  
 ~~~  
 python run.py --data_path path_to_dataset_for_training  
