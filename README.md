@@ -73,6 +73,6 @@ python eval_unsupervised.py --model_path path_to_pretraining_model --data_path p
 ~~~  
 
 ## TODO's  
-add details on preparing estimated depth/region proposal 
-add pretrained models
+add details on preparing estimated depth/region proposal  
+add pretrained models  
 
