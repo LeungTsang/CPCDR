@@ -29,7 +29,6 @@ dataset for training
                           │     ├── aachen_000000_000000_leftImg8bit.png  
                           │     └── ...  
                           └── ...  
-~~~
 dataset for evaluation  
       └── leftImg8bit/  
       │           └── val/  
@@ -47,6 +46,7 @@ dataset for evaluation
 ### Training  
 ~~~  
 python run.py --data_path path_to_dataset_for_training  
+
 ### Evaluation  
 ~~~  
 python eval_unsupervised.py --model_path path_to_pretraining_model --data_path path_to_dataset_for_evaluation  
