@@ -53,7 +53,7 @@ dataset for evaluation
                           └── ...  
 ~~~  
 
-## simple usage  
+## Simple Usage  
 ### Training  
 
 ~~~  
