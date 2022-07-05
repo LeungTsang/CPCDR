@@ -1,9 +1,10 @@
 # MSc-Project：Leverage Depth and Copy-Paste to Boost Contrastive Learning for Urban-Scene Segmentation
+## Overall Pipeline 
 ![Pipeline](https://github.com/LeungTsang/MSc-Project/raw/main/fig/pipeline.png)
-
+## Visualization  
 ![Visualization](https://github.com/LeungTsang/MSc-Project/raw/main/fig/fig1.gif)
 
-Thesis: http://resolver.tudelft.nl/uuid:3c7ba0bd-b467-4e1d-91df-c3ecceeec344
+Original Thesis: http://resolver.tudelft.nl/uuid:3c7ba0bd-b467-4e1d-91df-c3ecceeec344
 
 ## The expected directory of dataset(Cityscapes)  
 ~~~  
@@ -65,9 +66,15 @@ python run.py --data_path path_to_dataset_for_training  --only_generate_data
 ~~~
 use preparead data for training
 ~~~
-python run.py --data_path path_to_dataset_for_training  --use_prepared_data
+python run.py --data_path prepared dataset for training  --use_prepared_data
 ~~~
 ### Evaluation  
 ~~~  
 python eval_unsupervised.py --model_path path_to_pretraining_model --data_path path_to_dataset_for_evaluation  
 ~~~  
+
+## TODO's  
+add details on preparing estimated depth/region proposal  
+upload pretrained models  
+upload pre-generated depth/region proposal/datasets
+
