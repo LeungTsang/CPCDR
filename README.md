@@ -1,8 +1,8 @@
 # Copy-Pasting Coherent Depth Regions Improves Contrastive Learning for Urban-Scene Segmentation
 ## Overall Pipeline 
-![Pipeline](https://github.com/LeungTsang/Copy-Paste-Coherent-Depth-Regions/raw/main/fig/pipeline.png)
+![Pipeline](https://github.com/LeungTsang/CPCDR/raw/main/fig/pipeline.png)
 ## Visualization  
-![Visualization](https://github.com/LeungTsang/Copy-Paste-Coherent-Depth-Regions/raw/main/fig/fig1.gif)
+![Visualization](https://github.com/LeungTsang/CPCDR/raw/main/fig/fig1.gif)
 
 ## The expected directory of dataset(Cityscapes)  
 ~~~  
