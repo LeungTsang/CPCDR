@@ -1,4 +1,4 @@
-# MSc-Project：Leverage Depth and Copy-Paste to Boost Contrastive Learning for Urban-Scene Segmentation
+# Copy-Pasting Coherent Depth Regions Improves Contrastive Learning for Urban-Scene Segmentation
 ## Overall Pipeline 
 ![Pipeline](https://github.com/LeungTsang/MSc-Project/raw/main/fig/pipeline.png)
 ## Visualization  
