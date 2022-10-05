@@ -1,8 +1,8 @@
 # Copy-Pasting Coherent Depth Regions Improves Contrastive Learning for Urban-Scene Segmentation
 ## Overall Pipeline 
-![Pipeline](https://github.com/LeungTsang/MSc-Project/raw/main/fig/pipeline.png)
+![Pipeline](https://github.com/LeungTsang/Copy-Paste-Coherent-Depth-Regions/raw/main/fig/pipeline.png)
 ## Visualization  
-![Visualization](https://github.com/LeungTsang/MSc-Project/raw/main/fig/fig1.gif)
+![Visualization](https://github.com/LeungTsang/Copy-Paste-Coherent-Depth-Regions/raw/main/fig/fig1.gif)
 
 Original Thesis: http://resolver.tudelft.nl/uuid:3c7ba0bd-b467-4e1d-91df-c3ecceeec344
 
