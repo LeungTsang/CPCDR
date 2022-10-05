@@ -4,8 +4,6 @@
 ## Visualization  
 ![Visualization](https://github.com/LeungTsang/Copy-Paste-Coherent-Depth-Regions/raw/main/fig/fig1.gif)
 
-Original Thesis: http://resolver.tudelft.nl/uuid:3c7ba0bd-b467-4e1d-91df-c3ecceeec344
-
 ## The expected directory of dataset(Cityscapes)  
 ~~~  
 dataset for training  
